@@ -16,6 +16,16 @@
     <input id = "endDate" type = "date">
 </div>
 </div>
+<div id = "parent">  
+        <div class = "child"> 
+    <label for="startTime">Start Time</label><br>
+    <input id = "startTime" type = "time">
+</div> 
+<div class = "child">
+    <label for="endTime">End Time</label><br>
+    <input id = "endTime" type = "time">
+</div>
+</div>
 <label for="weekDays">Select weekdays for the promotion</label><br>
 <div class="weekDays-selector">
     <input type="checkbox" id="weekday-mon" class="weekday" />
@@ -33,11 +43,6 @@
     <input type="checkbox" id="weekday-sun" class="weekday" />
     <label for="weekday-sun">Sunday</label><br>
 </div>
-<br>
-<label class ="pt-4 mt-4" for="taskLength">Insert task length</label><br>
-<input type = "number"><br>
-<br>
-
 </form>  
 
 <button onclick = "generateDSL()" id = "testB">Generate dsl</button>
