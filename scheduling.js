@@ -25,28 +25,57 @@ function generateDSL()
 
 
     //find weekdays to run the task on
-    var checkedDays = "";
-    if(document.getElementById("weekday-mon").checked){
-        checkedDays = "MON"
-    } 
-    if(document.getElementById("weekday-tue").checked){
-        checkedDays = checkedDays  + "TUE" + "," 
-    } 
-    if(document.getElementById("weekday-wed").checked){
-        checkedDays = checkedDays + "WED" + "," 
-    } 
-    if(document.getElementById("weekday-thu").checked){
-        checkedDays = checkedDays + "THU" + "," 
-    } 
-    if(document.getElementById("weekday-fri").checked){
-        checkedDays = checkedDays+ "FRI" + "," 
-    } 
-   if(document.getElementById("weekday-sat").checked){
-        checkedDays = checkedDays + "SAT"+ "," 
-    } 
-    if(document.getElementById("weekday-sun").checked){
-        checkedDays =  checkedDays +"SUN"+ ","  
-    } 
-    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], checkedDays)
+    const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    const selectedWeekdays = Array.from(document.getElementsByClassName("weekday"))
+                      .filter(weekday => weekday.checked)
+                      .map((weekday, i) => weekdays[i]);
+    const checkedDays = selectedWeekdays.join(",");
+
+    if (checkedDays.length === 0) {
+    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], "*");
+    } else {
+    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], checkedDays);
+    }
+
+    document.getElementById("DSLString").textContent = finalDSL;
+
+
+
+    //find months to run the task on
+    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const selectedMonths = months.filter((month, i) => document.getElementById(`month-${month.toLowerCase()}`).checked);
+    const checkedMonths = selectedMonths.join(",");
+    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[3], checkedMonths)
     document.getElementById("DSLString").textContent = finalDSL
+
+
+    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[2], selectedDate)
 }
+
+
+const button = document.getElementById('toggle-button');
+const element = document.getElementById('hidden-element');
+
+button.addEventListener('click', () => {
+  if (element.style.display === 'none') {
+    element.style.display = 'block';
+    button.classList.add('active');
+  } else {
+    element.style.display = 'none';
+    button.classList.remove('active');
+  }
+});
+
+flatpickr("#date-input", {
+    dateFormat: "d",
+    mode: "multiple"
+});
+
+var dateInput = document.getElementById("date-input");
+var selectedDate = "";
+
+flatpickr(dateInput, {
+  onChange: function(selectedDates, dateStr, instance) {
+    selectedDate = dateStr;
+  }
+});

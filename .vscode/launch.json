@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "file": "C:\\Users\\rari01\\Contentstack\\scheduling_element.html",
+            "file": "C:\\Users\\Malmet Tamm\\Contentstack\\Scheduling_Contentstack\\scheduling_element.html",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
         }

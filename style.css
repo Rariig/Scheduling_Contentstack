@@ -1,0 +1,44 @@
+.active {
+  background-color: #c59792;
+  border: 1.5px solid rgb(134, 134, 134);
+border-radius: 3px;
+}
+
+#calendar{
+    size: 50%;
+    float: left;
+}
+
+#parent {
+    width: 100%;
+    height: 90px;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+.child {
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+    background-color: white;
+}
+
+    .weekDays-selector input {
+  display: none!important;
+}
+
+.weekDays-selector input[type=checkbox] + label {
+  display: inline-block;
+  border-radius: 6px;
+  background: #dddddd;
+  height: 40px;
+  width: 70px;
+  margin-right: 3px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.weekDays-selector input[type=checkbox]:checked + label {
+  background: #124905;
+  color: #ffffff;
+}

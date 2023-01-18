@@ -2,9 +2,14 @@
 
 <head>
     <meta name= "viewport"  content = "width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">   
+    
 </head>
 
 <body>
+    
     <form>
     <div id = "parent">  
         <div class = "child"> 
@@ -26,7 +31,6 @@
     <input id = "endTime" type = "time">
 </div>
 </div>
-<label for="weekDays">Select weekdays for the promotion</label><br>
 <div class="weekDays-selector">
     <input type="checkbox" id="weekday-mon" class="weekday" />
     <label for="weekday-mon">Monday</label><br>
@@ -49,43 +53,15 @@
 
 <div>Custom task string: </div>
 <div id = "DSLString">midagi</div>
+
+
+<button id="toggle-button">Toggle custom day pick</button>
+<div id="hidden-element" style="display:none;">
+<input type="text" id="date-input"></div>
+
 <script src= "scheduling.js"></script>
 </body>
 
 </html>
 
-<style>
-#parent {
-    width: 100%;
-    height: 90px;
-    white-space: nowrap;
-    overflow-x: auto;
-}
-.child {
-    display: inline-block;
-    width: 10%;
-    height: 100%;
-    background-color: white;
-}
 
-.weekDays-selector input {
-  display: none!important;
-}
-
-.weekDays-selector input[type=checkbox] + label {
-  display: inline-block;
-  border-radius: 6px;
-  background: #dddddd;
-  height: 40px;
-  width: 70px;
-  margin-right: 3px;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.weekDays-selector input[type=checkbox]:checked + label {
-  background: #2AD705;
-  color: #ffffff;
-}
-</style>
