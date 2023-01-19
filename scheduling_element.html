@@ -14,7 +14,7 @@
 
     <form>
     <div id = "parent">  
-        <div class="taskRunning" style="margin-left: 1.5%;">Period to run: </div>
+        <div class="basicText" style="margin-left: 1.5%;">Period to run: </div>
         <div class = "child">       
     <label for="startDate">From </label>
     <input id = "startDate" type = "date">
@@ -25,7 +25,7 @@
 </div>
 </div>
 <div id = "parent"> 
-    <div class="taskRunning" style="margin-left: 1.5%; margin-right: 0.65%;">In between: </div> 
+    <div class="basicText" style="margin-left: 1.5%; margin-right: 0.65%;">In between: </div> 
         <div class = "child"> 
     <label for="startTime">From</label>
     <input id = "startTime" type = "time">
@@ -35,6 +35,15 @@
     <input id = "endTime" type = "time">
 </div>
 </div>
+
+<header>
+    <div class="additional-settings-text" style = "margin-right: 0.65%;">Additional settings</div>
+    <label for="additional-settings-checkbox">
+        <input type="checkbox" id="additional-settings-checkbox">
+    </label>
+</header>
+<div class = "additional-settings">
+    <div class="basicText" style="margin-left: 1.5%;">Select custom weekdays:</div>
 <div class="weekDays-selector">
     <div class="weekday-container">
         <input type="checkbox" id="weekday-mon" class="weekday" />
@@ -65,9 +74,11 @@
         <label for="weekday-sun">Sunday</label>
     </div>
 </div>
+</div>
+
 </form>  
 
-<button onclick = "generateDSL()" id = "testB">Generate dsl</button>
+<button onclick = "generateDSL()" id = "dslButton">Generate dsl</button>
 
 <div>Custom task string: </div>
 <div id = "DSLString">midagi</div>
