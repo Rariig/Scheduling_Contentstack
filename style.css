@@ -1,5 +1,5 @@
 .active {
-  background-color: #c59792;
+  background-color: #e4c8c5;
   border: 1.5px solid rgb(134, 134, 134);
 border-radius: 3px;
 }
@@ -31,7 +31,7 @@ border-radius: 3px;
   border-radius: 6px;
   background: #dddddd;
   height: 40px;
-  width: 70px;
+  width: 90px;
   margin-right: 3px;
   line-height: 40px;
   text-align: center;
@@ -41,4 +41,17 @@ border-radius: 3px;
 .weekDays-selector input[type=checkbox]:checked + label {
   background: #124905;
   color: #ffffff;
+}
+
+.weekDays-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  justify-content: center;
+}
+
+.weekday-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

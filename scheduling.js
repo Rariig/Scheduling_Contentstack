@@ -13,35 +13,34 @@ function generateDSL()
     
     
     
-    console.log(startTime)
-    var finalDSL = document.getElementById("DSLString").textContent
+  
+    let finalDSL = document.getElementById("DSLString").textContent
     finalDSL = "1 2 3 4 5_x x_"+differenceInDays
-    console.log(finalDSL.split("_")[1].split(" ")[0])
     finalDSL = finalDSL.replace(finalDSL.split("_")[1].split(" ")[0], startTime)
-    console.log(finalDSL)
-    console.log(finalDSL.split("_")[1].split(" ")[1]);
     finalDSL = finalDSL.replace(finalDSL.split("_")[1].split(" ")[1], endTime)
-    console.log(finalDSL)
+    
 
 
-    //find weekdays to run the task on
-    const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    const selectedWeekdays = Array.from(document.getElementsByClassName("weekday"))
+      // Find selected weekdays
+      const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+      const selectedWeekdays = Array.from(document.getElementsByClassName("weekday"))
                       .filter(weekday => weekday.checked)
-                      .map((weekday, i) => weekdays[i]);
-    const checkedDays = selectedWeekdays.join(",");
+                      .map((weekday) => weekday.id.split("-")[1].toUpperCase());
+      console.log(selectedWeekdays);
+      
+      //Update DSL string
+      finalDSL = document.getElementById("DSLString").textContent;
+      if (selectedWeekdays.length === 0) {
+         finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], "*");
+      } else {
+          finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], selectedWeekdays);
+      }
+      document.getElementById("DSLString").textContent = finalDSL;  
 
-    if (checkedDays.length === 0) {
-    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], "*");
-    } else {
-    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], checkedDays);
-    }
-
-    document.getElementById("DSLString").textContent = finalDSL;
 
 
 
-    //find months to run the task on
+   /* //find months to run the task on
     const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     const selectedMonths = months.filter((month, i) => document.getElementById(`month-${month.toLowerCase()}`).checked);
     const checkedMonths = selectedMonths.join(",");
@@ -49,7 +48,7 @@ function generateDSL()
     document.getElementById("DSLString").textContent = finalDSL
 
 
-    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[2], selectedDate)
+    finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[2], selectedDate)*/
 }
 
 
