@@ -7,27 +7,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">   
     
 </head>
-
+<header>Content Scheduling</header>
 <body>
-    
+    <div class="taskName" style="margin-left: 1.5%;">Task name: </div>
+    <input  class="taskName" type="text" placeholder="Task name" style="color: rgb(0, 0, 0); margin-left: 1.5%; margin-bottom: 1.5%;">
+
     <form>
     <div id = "parent">  
-        <div class = "child"> 
-    <label for="startDate">Start date</label><br>
+        <div class="taskRunning" style="margin-left: 1.5%;">Period to run: </div>
+        <div class = "child">       
+    <label for="startDate">From </label>
     <input id = "startDate" type = "date">
 </div> 
 <div class = "child">
-    <label for="endDate">End date</label><br>
+    <label for="endDate">To </label>
     <input id = "endDate" type = "date">
 </div>
 </div>
-<div id = "parent">  
+<div id = "parent"> 
+    <div class="taskRunning" style="margin-left: 1.5%; margin-right: 0.65%;">In between: </div> 
         <div class = "child"> 
-    <label for="startTime">Start Time</label><br>
+    <label for="startTime">From</label>
     <input id = "startTime" type = "time">
 </div> 
 <div class = "child">
-    <label for="endTime">End Time</label><br>
+    <label for="endTime">To</label>
     <input id = "endTime" type = "time">
 </div>
 </div>
