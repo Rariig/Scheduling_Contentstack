@@ -69,6 +69,7 @@ header{
 .taskName, .basicText{
   display: inline-block;
   margin-right: 0.65%;
+  margin-left: 1.5%;
 }
 
 .additional-settings {
