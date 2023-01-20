@@ -2,7 +2,6 @@
 
 <head>
     <meta name= "viewport"  content = "width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="./style.css"> 
     <script src="https://unpkg.com/@contentstack/ui-extensions-sdk@2.2.0/dist/ui-extension-sdk.js"></script>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@contentstack/ui-extensions-sdk@2.2.0/dist/ui-extension-sdk.css">
 </head>
@@ -91,9 +90,185 @@
 
 
 
-<script src= "scheduling.js"></script>
+<script>function generateDSL()
+    {
+        //find running days logic
+        var startDate = new Date (document.getElementById("startDate").value)
+        var endDate = new Date (document.getElementById("endDate").value)
+        var difference = endDate.getTime() - startDate.getTime()
+        var differenceInDays = difference / (1000 * 3600 * 24)
+    
+        //find task length and running times logic
+        var startTime = document.getElementById("startTime").value
+        var endTime = document.getElementById("endTime").value
+    
+        var finalDSL = document.getElementById("DSLString").textContent
+        finalDSL = "1 2 3 4 5_x x_"+differenceInDays
+        finalDSL = finalDSL.replace(finalDSL.split("_")[1].split(" ")[0], startTime)
+        finalDSL = finalDSL.replace(finalDSL.split("_")[1].split(" ")[1], endTime)
+    
+        console.log(finalDSL)
+        
+    
+    
+          // Find selected weekdays
+          const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+          const selectedWeekdays = Array.from(document.getElementsByClassName("weekday"))
+                          .filter(weekday => weekday.checked)
+                          .map((weekday) => weekday.id.split("-")[1].toUpperCase())
+          console.log(selectedWeekdays)
+          
+          //Update DSL string
+          console.log(finalDSL)
+          if (selectedWeekdays.length === 0) {
+             finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], "*");
+          } else {
+              finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[4], selectedWeekdays);
+          }
+    
+    
+          console.log(finalDSL)
+          finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[2], "*");
+          finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[3], "*");
+    
+          var hours = document.getElementById("hours").value;
+          var minutes = document.getElementById("minutes").value;
+    
+          if (minutes != "NaN" && minutes != "") {
+            finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[0], "*/" + minutes);
+          }
+          else{finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[0], "*")}
+      
+          if (hours != "NaN" && hours != "") {
+           finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[1], "*/" + hours);
+          }
+          else{finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[1], "*")}
+    
+          document.getElementById("DSLString").textContent = finalDSL
+    
+    }
+    
+    
+    
+    
+    var additionalSettingsCheckbox = document.getElementById("additional-settings-checkbox");
+    var additionalSettings = document.getElementsByClassName("additional-settings");
+    var weekdayCheckboxes = document.getElementsByClassName("weekday");
+    
+    additionalSettingsCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+            for (var i = 0; i < additionalSettings.length; i++) {
+                additionalSettings[i].style.opacity = "1";
+                additionalSettings[i].style.pointerEvents = "auto";
+            }
+            for (var i = 0; i < weekdayCheckboxes.length; i++) {
+                weekdayCheckboxes[i].checked = false;
+            }
+        } else {
+            for (var i = 0; i < additionalSettings.length; i++) {
+                additionalSettings[i].style.opacity = "0.5";
+                additionalSettings[i].style.pointerEvents = "none";
+            }
+            for (var i = 0; i < weekdayCheckboxes.length; i++) {
+                weekdayCheckboxes[i].checked = false;
+            }
+            hours.value = "";
+            minutes.value = "";
+        }
+    })</script>
 </body>
 
 </html>
+
+<style>.active {
+    background-color: #e4c8c5;
+    border: 1.5px solid rgb(134, 134, 134);
+  border-radius: 3px;
+  }
+  
+  #calendar{
+      size: 50%;
+      float: left;
+  }
+  
+  #parent {
+      width: 100%;
+      height: 50px;
+      white-space: nowrap;
+      overflow-x: auto;
+  }
+  .child {
+      display: inline-block;
+      width: 10%;
+      height: 100%;
+      background-color: white;
+  }
+  
+      .weekDays-selector input {
+    display: none!important;
+  }
+  
+  .weekDays-selector input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 90px;
+    margin-right: 3px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .weekDays-selector input[type=checkbox]:checked + label {
+    background: #9c6f1a;
+    color: #ffffff;
+  }
+  
+  .weekDays-selector {
+    display: inline-block;
+    grid-template-columns: repeat(7,0.06fr);
+    align-content: start;
+  }
+  
+  .weekday-container {
+    display: inline-block;
+  }
+  
+  .child{
+    margin-left: 1%;
+  }
+  
+  header{
+    font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: larger;
+      padding: 1.5%;
+      display: flex;
+      align-items: center;
+  }
+  
+  .taskName, .basicText{
+    display: inline-block;
+    margin-right: 0.65%;
+    margin-left: 1.5%;
+  }
+  
+  .additional-settings {
+    margin-right: 8px;
+  }
+  
+  input[type='checkbox'] {
+    margin-left: auto;
+  }
+  
+  .additional-settings {
+    opacity: 50%;
+    pointer-events: none;
+  }
+  
+  input[type='checkbox']:checked + .additional-settings {
+    opacity: 1;
+  }</style>
 
 
