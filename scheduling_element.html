@@ -8,7 +8,7 @@
 <header>Content Scheduling</header>
 <body>
     <div class="basicText">Task name: </div>
-    <input  class="taskName" type="text" placeholder="Task name" style="color: rgb(0, 0, 0); margin-left: 1.5%; margin-bottom: 1.5%;">
+    <input  id = "taskName" class="taskName" type="text" placeholder="Task name" style="color: rgb(0, 0, 0); margin-left: 1.5%; margin-bottom: 1.5%;">
 
     <form>
     <div id = "parent">  
@@ -42,7 +42,7 @@
 </header>
 <div class = "additional-settings">
     <div class="basicText">Select custom weekdays:</div>
-<div class="weekDays-selector">
+<div id ="weekDays-selector" class="weekDays-selector">
     <div class="weekday-container">
         <input type="checkbox" id="weekday-mon" class="weekday" />
         <label for="weekday-mon">Monday</label>
@@ -86,11 +86,70 @@
 <button onclick = "generateDSL()" id = "dslButton" style = "margin-left: 2.25%; transform:scale(1.5); margin-bottom: 1.5%;">Submit</button>
 
 <div class = "basicText" style = "display:block; margin-bottom: 1%;">Custom task string: </div>
-<div id = "DSLString" class="basicText">midagi</div>
+<div id = "DSLString" class="basicText">abcde</div>
 
 
 
-<script>function generateDSL()
+<script>
+function setValues() {
+  document.getElementById('startDate').value = extensionField.field.getData().startDate;
+  document.getElementById('endDate').value = extensionField.field.getData().endDate;
+  document.getElementById('startTime').value = extensionField.field.getData().startTime;
+  document.getElementById('endTime').value = extensionField.field.getData().endTime;
+  document.getElementById('DSLString').innerHTML = extensionField.field.getData().DSLString;
+  document.getElementById('additional-settings-checkbox').checked = extensionField.field.getData().additionalSettingsCheckbox;
+  document.getElementById('hours').value = extensionField.field.getData().hours;
+  document.getElementById('minutes').value = extensionField.field.getData().minutes;
+  
+  var additionalSettings = document.getElementsByClassName("additional-settings");
+  for (var i = 0; i < additionalSettings.length; i++) {
+    if (document.getElementById('additional-settings-checkbox').checked) {
+      additionalSettings[i].style.opacity = "1";
+      additionalSettings[i].style.pointerEvents = "auto";
+    } else {
+      additionalSettings[i].style.opacity = "0.5";
+      additionalSettings[i].style.pointerEvents = "none";
+    }
+  }
+}
+
+
+window.onload = function() {
+  setValues();
+}
+
+  
+window.extensionField = {};
+var taskName= document.getElementById("taskName");
+var startDate= document.getElementById("startDate");
+var endDate= document.getElementById("endDate");
+var startTime= document.getElementById("startTime");
+var endTime= document.getElementById("endTime");
+var additionalSettingsCheckbox= document.getElementById("additional-settings-checkbox");
+var weekDaysSelector= document.getElementById("weekDays-selector");
+var hours= document.getElementById("hours");
+var minutes= document.getElementById("minutes");
+var DSLString= document.getElementById("DSLString");
+
+
+ContentstackUIExtension.init().then(function(extension) {
+    // make extension object globally available
+    extensionField = extension;
+    // Get current values from Contentstack and update the input elements
+    taskName.value = extensionField.field.getData().taskName;
+    startDate.valueAsDate = extensionField.field.getData().startDate;
+    endDate.valueAsDate = extensionField.field.getData().endDate;
+    startTime.value = extensionField.field.getData().startTime;
+    endTime.value = extensionField.field.getData().endTime;
+    additionalSettingsCheckbox.checked = extensionField.field.getData().additionalSettingsCheckbox;
+    weekDaysSelector.value = extensionField.field.getData().weekDaysSelector;
+    hours.value = extensionField.field.getData().hours;
+    minutes.value = extensionField.field.getData().minutes;
+    DSLString.innerHTML = extensionField.field.getData().DSLString;
+})
+
+
+function generateDSL()
     {
         //find running days logic
         var startDate = new Date (document.getElementById("startDate").value)
@@ -145,6 +204,19 @@
           else{finalDSL = finalDSL.replace(finalDSL.split("_")[0].split(" ")[1], "*")}
     
           document.getElementById("DSLString").textContent = finalDSL
+
+
+          extensionField.field.setData({taskName: taskName.value,
+            startDate: document.getElementById('startDate').value,
+            endDate: document.getElementById('endDate').value,
+            startTime: document.getElementById('startTime').value,
+            endTime: document.getElementById('endTime').value,
+            additionalSettingsCheckbox: additionalSettingsCheckbox.checked,
+            weekDaysSelector: weekDaysSelector.value,
+            hours: document.getElementById('hours').value,
+            minutes: document.getElementById('minutes').value,
+            DSLString: document.getElementById('DSLString').innerHTML
+        });
     
     }
     
@@ -175,20 +247,17 @@
             hours.value = "";
             minutes.value = "";
         }
-    })</script>
+    })
+    </script>
 </body>
 
 </html>
 
-<style>.active {
+<style>
+.active {
     background-color: #e4c8c5;
     border: 1.5px solid rgb(134, 134, 134);
   border-radius: 3px;
-  }
-  
-  #calendar{
-      size: 50%;
-      float: left;
   }
   
   #parent {
@@ -199,7 +268,6 @@
   }
   .child {
       display: inline-block;
-      width: 10%;
       height: 100%;
       background-color: white;
   }
@@ -235,10 +303,6 @@
     display: inline-block;
   }
   
-  .child{
-    margin-left: 1%;
-  }
-  
   header{
     font-family: Arial, sans-serif;
       font-weight: bold;
@@ -248,9 +312,9 @@
       align-items: center;
   }
   
-  .taskName, .basicText{
+  .basicText{
     display: inline-block;
-    margin-right: 0.65%;
+    margin-right: 1%;
     margin-left: 1.5%;
   }
   
@@ -270,5 +334,3 @@
   input[type='checkbox']:checked + .additional-settings {
     opacity: 1;
   }</style>
-
-
